@@ -8,3 +8,21 @@ canvas {
 	margin:0px;
 	position: absolute;
 }
+
+#controls {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	background-color: #ccc;
+	z-index: 1337;
+	height: 50px;
+}
+
+#slider {
+	position: relative;
+	z-index: 9001;
+	width: 300px;
+	height: 10px;
+	top: 15px;
+	left: 50px;
+}

@@ -223,8 +223,9 @@ function drawLine(x_values, y_values, z_values, options) {
     createVertexForEachPoint(line_geom, x_values, y_values, z_values);
 
     // var line_material = new THREE.LineBasicMaterial(options);
-    var line_material = new THREE.MeshBasicMaterial({color: 0xff55cc, side: THREE.DoubleSide});
+    var line_material = new THREE.MeshBasicMaterial({color: options.color, side: THREE.DoubleSide});
     var line = new THREE.Line(line_geom, line_material);
+    line.material.lineWidth = 3;
     scene.add(line);
 
     clearArrays();
