@@ -9,9 +9,13 @@ var x_values = [];
 var y_values = [];
 var z_values = [];
 
+var jj, objectMetadata;
+
 function drawThreeGeo(json, radius, shape, options) {
-    
+    console.log(json);
+    jj = json;
     var json_geom = createGeometryArray(json); 
+    console.log(json_geom);
     //An array to hold the feature geometries.
     var convertCoordinates = getConversionFunctionName(shape); 
     //Whether you want to convert to spherical or planar coordinates.
@@ -19,8 +23,14 @@ function drawThreeGeo(json, radius, shape, options) {
     //Re-usable array to hold coordinate values. This is necessary so that you can add 
     //interpolated coordinates. Otherwise, lines go through the sphere instead of wrapping around.
     
+    objectMetadata = [];
+    // altTitleArray = [];
+
     for (var geom_num = 0; geom_num < json_geom.length; geom_num++) {
-                
+        objectMetadata.push({
+            "title": json.features[geom_num].properties.title,
+            "alt-title": json.features[geom_num].properties['alt-title'], 
+        });
         if (json_geom[geom_num].type == 'Point') {
             convertCoordinates(json_geom[geom_num].coordinates, radius);            
             drawParticle(y_values[0], z_values[0], x_values[0], options);
@@ -241,8 +251,6 @@ function createVertexForEachPoint(object_geometry, values_axis1, values_axis2, v
 
 function get_shape_geometry(values_axis1, values_axis2, values_axis3) {
     // console.log(object_geometry)
-
-
     var o_g = [];
 
     for (var i = 0; i < values_axis1.length; i++) {

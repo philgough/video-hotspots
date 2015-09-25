@@ -116,8 +116,8 @@
 
 	//Draw the GeoJSON
 	// var json_output = [];
-		var test_json = $.getJSON("assets/geoJSON/countries_states.geojson", function (data) { 
-			drawThreeGeo(data, movieBallSize - 300, 'sphere', {
+		var test_json = $.getJSON("assets/geoJSON/test_map.json", function (data) { 
+			drawThreeGeo(data, movieBallSize - 5, 'sphere', {
 				color: 'yellow'
 			})    
 		});
@@ -159,9 +159,10 @@ function getIntersectedLine(intersects) {
 			// console.log(intersects.length);
 			if ( intersects.length > 0 ) {
 				// if (currentIntersected !== undefined && currentIntersected.type !== 'Mesh') {
-					// console.log(currentIntersected.type);
 					if ( currentIntersected !== undefined ) {
+						// console.log(currentIntersected);
 						currentIntersected.material.linewidth = 1;
+						ci = currentIntersected;
 					}
 
 
