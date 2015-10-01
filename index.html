@@ -2,11 +2,15 @@
 <html>
 <head>
 	<title>Video Hotspots</title>
+
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css
 	">
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 </head>
 <body>
+<div id="overlay">
+	
+</div>
 <div id="controls">
 	<!-- Add slider -->
 	<div id="slider" title="IPD"></div>
@@ -29,6 +33,10 @@
 
 	<!-- threeGeoJson -->
 	<script src="js/lib/threeGeoJson.js" type="text/javascript"></script>
+
+	<!-- create tooltips using d3.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" type="text/javascript"></script>
+	<script src="js/tooltips.js" type="text/javascript"></script>
 
 	<!-- create the scene using three -->
 	<script src="js/videoScene.js" type="text/javascript"></script>

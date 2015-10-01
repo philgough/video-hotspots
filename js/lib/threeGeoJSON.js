@@ -9,11 +9,11 @@ var x_values = [];
 var y_values = [];
 var z_values = [];
 
-var jj, objectMetadata;
+var objectMetadata;
 
 function drawThreeGeo(json, radius, shape, options) {
     console.log(json);
-    jj = json;
+    // jj = json;
     var json_geom = createGeometryArray(json); 
     console.log(json_geom);
     //An array to hold the feature geometries.
@@ -27,6 +27,7 @@ function drawThreeGeo(json, radius, shape, options) {
     // altTitleArray = [];
 
     for (var geom_num = 0; geom_num < json_geom.length; geom_num++) {
+        console.log(geom_num)
         objectMetadata.push({
             "title": json.features[geom_num].properties.title,
             "alt-title": json.features[geom_num].properties['alt-title'], 
@@ -47,7 +48,7 @@ function drawThreeGeo(json, radius, shape, options) {
             for (var point_num = 0; point_num < coordinate_array.length; point_num++) {
                 convertCoordinates(coordinate_array[point_num], radius); 
             }             
-            drawLine(y_values, z_values, x_values, options);
+            drawLine(y_values, z_values, x_values, options, geom_num);
             
         } else if (json_geom[geom_num].type == 'Polygon') {                        
             for (var segment_num = 0; segment_num < json_geom[geom_num].coordinates.length; segment_num++) {
@@ -56,7 +57,7 @@ function drawThreeGeo(json, radius, shape, options) {
                 for (var point_num = 0; point_num < coordinate_array.length; point_num++) {
                     convertCoordinates(coordinate_array[point_num], radius); 
                 }
-                drawLine(y_values, z_values, x_values, options);
+                drawLine(y_values, z_values, x_values, options, geom_num);
             }                            
             
         } else if (json_geom[geom_num].type == 'MultiLineString') {
@@ -66,7 +67,7 @@ function drawThreeGeo(json, radius, shape, options) {
                 for (var point_num = 0; point_num < coordinate_array.length; point_num++) {
                     convertCoordinates(coordinate_array[point_num], radius); 
                 }
-                drawLine(y_values, z_values, x_values, options);
+                drawLine(y_values, z_values, x_values, options, geom_num);
             }             
             
         } else if (json_geom[geom_num].type == 'MultiPolygon') {
@@ -77,7 +78,7 @@ function drawThreeGeo(json, radius, shape, options) {
                     for (var point_num = 0; point_num < coordinate_array.length; point_num++) {
                         convertCoordinates(coordinate_array[point_num], radius); 
                     }
-                    drawLine(y_values, z_values, x_values, options);
+                    drawLine(y_values, z_values, x_values, options, geom_num);
                 }
             }
         } else {
@@ -228,7 +229,7 @@ function drawParticle(x, y, z, options) {
     clearArrays();
 }
 
-function drawLine(x_values, y_values, z_values, options) {
+function drawLine(x_values, y_values, z_values, options, index) {
     var line_geom = new THREE.Geometry();
     createVertexForEachPoint(line_geom, x_values, y_values, z_values);
 
@@ -236,6 +237,7 @@ function drawLine(x_values, y_values, z_values, options) {
     var line_material = new THREE.MeshBasicMaterial({color: options.color, side: THREE.DoubleSide});
     var line = new THREE.Line(line_geom, line_material);
     line.material.lineWidth = 3;
+    line.name = index;
     scene.add(line);
 
     clearArrays();
@@ -250,7 +252,7 @@ function createVertexForEachPoint(object_geometry, values_axis1, values_axis2, v
 
 
 function get_shape_geometry(values_axis1, values_axis2, values_axis3) {
-    // console.log(object_geometry)
+    // object geometry
     var o_g = [];
 
     for (var i = 0; i < values_axis1.length; i++) {

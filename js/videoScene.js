@@ -1,3 +1,5 @@
+
+
 // Variables 
 
 	// Three.js variables
@@ -106,6 +108,7 @@
 		}
 	// indicator sphere
 
+
 	var inter_geometry = new THREE.SphereGeometry( 10 );
 	var inter_material = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
 
@@ -136,6 +139,7 @@ function getIntersectedLine(intersects) {
 		if (intersects[i].object.type === 'Line') {
 			j = intersects[i].object;
 			k = intersects[i].point;
+			// console.log(intersects[i]);
 		}
 	}
 	return {"object":j, "position": k};
@@ -155,22 +159,24 @@ function getIntersectedLine(intersects) {
 
 		raycaster.setFromCamera( mouse, camera );
 			var intersects = raycaster.intersectObjects(scene.children, true)
-			// console.log(intersects.length)
 			// console.log(intersects.length);
 			if ( intersects.length > 0 ) {
 				// if (currentIntersected !== undefined && currentIntersected.type !== 'Mesh') {
+
 					if ( currentIntersected !== undefined ) {
-						// console.log(currentIntersected);
 						currentIntersected.material.linewidth = 1;
 						ci = currentIntersected;
+						hideTooltip();
 					}
 
-
-					// currentIntersected = intersects[ 0 ].object;
+					currentIntersected = intersects[0].object;
 					var intersectData = getIntersectedLine(intersects);
 					currentIntersected = intersectData.object;
 					if (currentIntersected){
-						// console.log(currentIntersected.material.linewidth)
+						// console.log(objectMetadata[currentIntersected.name])
+
+						showTooltip(currentIntersected.name)
+
 						currentIntersected.material.linewidth = 5;
 
 						sphereInter.visible = true;
@@ -178,17 +184,21 @@ function getIntersectedLine(intersects) {
 						// if (currentIntersected.type !== 'Mesh') {
 							// sphereInter.position.copy( intersects[ 0 ].point );
 						// }
+
+
+
 					}
 			} else {
 
 				if ( currentIntersected !== undefined ) {
-
 					currentIntersected.material.linewidth = 1;
 
 				}
 
 				currentIntersected = undefined;
 
+				// hide d3 tooltip
+				// hideTooltip();
 				sphereInter.visible = false;
 
 			}
@@ -288,3 +298,20 @@ function getIntersectedLine(intersects) {
 		}
 	});
 // });
+
+
+var tooltip = d3.select("#overlay").append("svg")
+.attr("id", "tooltip")
+.attr("visibility", "hidden");
+
+var tooltipP1 = tooltip.append("p").text(tooltipText.l1);
+var tooltipP2 = tooltip.append("p").text(tooltipText.l2);
+
+d3.select("canvas").on("mousemove", function() {
+	var xPos = d3.mouse(this)[0];
+	var yPos = d3.mouse(this)[1];
+	// console.log("mouse", [xPos, yPos]);
+	tooltip.style("left", xPos).style("top", yPos);
+
+});
+

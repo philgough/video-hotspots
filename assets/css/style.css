@@ -18,11 +18,27 @@ canvas {
 	height: 50px;
 }
 
+#overlay {
+	position: absolute;
+	top:0;
+	height: 100%;
+	width: 100%;
+}
+
 #slider {
 	position: relative;
-	z-index: 9001;
+	z-index: 1984;
 	width: 300px;
 	height: 10px;
 	top: 15px;
 	left: 50px;
 }
+
+#tooltip {
+	position: absolute;
+	z-index: 9001;
+	width: 400px;
+	height: 250px;
+	background-color: steelblue;
+}
+
